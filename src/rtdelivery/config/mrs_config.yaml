@@ -1,0 +1,13 @@
+server: idex.dhe.ibm.com
+java_root: /vol1/regs2/linuxjavasdks/java/Eclipse/IBM/java/eclipse/
+ibm:
+  java:
+    eclipse:
+      "7.0":
+        x64_windows: ".zip"
+        x32_windows: ".zip"
+oracle:
+  java:
+    jdk:
+      "8.0":
+        x64_windows: "tar.gz"

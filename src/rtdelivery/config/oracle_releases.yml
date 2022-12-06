@@ -1,0 +1,12 @@
+defaults: "oracle_defaults.yaml"
+destinations:
+  - "jim"
+deliveries:
+  - vrmf: "19.0.1"
+    build_id: "10"
+  - vrmf: "17.0.5"
+    build_id: "9"
+  - vrmf: "11.0.17"
+    build_id: "10"
+  - vrmf: "8.0.341"
+    build_id: "10"

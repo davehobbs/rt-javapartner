@@ -1,0 +1,47 @@
+# v.r.m.f based release name
+vendor: "oracle"
+bldlang: "java"
+technology: "jdk"
+source: "javapartner"
+destinations:
+  - "jim"
+releases:
+  "7.0":
+    platforms:
+      - x32_linux
+      - x64_linux
+      - x64_windows
+      - x32_windows
+      - x64_mac
+      - aarch64_linux
+      - aarch64_mac
+      - x32_solaris
+      - x64_solaris
+      - sparc_solaris
+      - sparcv9_solaris
+  "8.0":
+    platforms:
+      - x32_linux
+      - x64_linux
+      - x64_windows
+      - x32_windows
+      - x64_mac
+      - aarch64_linux
+      - aarch64_mac
+      - sparcv9_solaris
+      - x64_solaris
+  "11.0":
+    platforms:
+      - x64_linux
+      - x64_mac
+      - x64_windows
+      - aarch64_linux
+      - aarch64_mac
+      - sparcv9_solaris
+  "17.0":
+    platforms:
+      - aarch64_linux
+      - x64_linux
+      - x64_windows
+      - aarch64_mac
+      - x64_mac

@@ -1,0 +1,45 @@
+delivery:
+  workspace_path: "/Users/davehobbs/git/runtimes/rt-javapartner/output"
+  binaries_path: "{{workspace_path}}/binaries"
+  meta_path: "{{workspace_path}}/meta"
+  log_path: "{{workspace_path}}/logs"
+  environment: $ENVIRONMENT
+rdm:
+  user_name: $RDM_USERNAME
+  password: $RDM_PASSWORD
+  server: idex.dhe.ibm.com
+  java_root: /vol1/regs2/linuxjavasdks/java/Eclipse/IBM/java/eclipse/
+jim:
+  user_name: $JIM_USERNAME
+  password: $JIM_PASSWORD
+  server: "ebitzone.hursley.ibm.com"
+  vendors:
+    oracle:
+      binary_root_dir: "/x/Java/Oracle/jdk"
+      source_root_dir: "/x/Java/Oracle/jdk-source"
+    ibm:
+      binary_root_dir: "/x/Java/IBM/java/jdk"
+      source_root_dir: "/x/Java/IBM/jdk-source"
+sftp:
+  java_root: /www/prot/JavaPartnerSites
+  vendors:
+    ibm:
+      vendor_dir: "ibmjavaversions"
+      "7.0":
+      "7.1": "version71"
+      "8.0": "version8"
+      "11.0": "version11"
+    oracle:
+      vendor_dir: "oracle"
+jps:
+  credentials:
+    # Note that these names must match the named arguments to ArtifactoryApi
+    username: "dave_hobbs@uk.ibm.com"
+    repository_name: "JAVA"
+    artifactory_url: "https://javapartner.oracle.com/artifactory"
+    password: $JAVA_PARTNER_ARTIFACTORY_KEY
+  repository_paths:
+    - name: "JAVA-SE"
+      path: "/"
+    - name: "Private-IBM"
+      path: "/download/java-se/"

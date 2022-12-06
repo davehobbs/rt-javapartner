@@ -1,0 +1,28 @@
+# Platform key name and build type
+platform_types:
+  ppc64_aix: normal
+  ppc64_linux: normal
+  aarch32_linux: normal
+  aarch64_linux: normal
+  aarch64_mac: normal
+  ppc64le_linux: normal
+  ppc_aix: normal
+  ppc_linux: normal
+  s390_linux: normal
+  s390_zos: normal
+  s390x_linux: normal
+  s390x_zos: normal
+  x32_linux: normal
+  x32_windows: normal
+  x64_linux: normal
+  x64_windows: normal
+  sparc_solaris: hybrid
+  sparcv9_solaris: hybrid
+  x64_mac: hybrid
+  x32_solaris: hybrid
+  x64_solaris: hybrid
+  all_all: all
+  itanium32_hpux: hp
+  itanium64_hpux: hp
+  risc_hpux: hp
+  riscv64_hpux: hp

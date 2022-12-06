@@ -1,0 +1,23 @@
+# Ignore mac cache directory
+.DS_Store
+
+# Vscode .gitignore - https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
+.vscode/
+
+# Local History for Visual Studio Code
+.history/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+.Python
+logs/
+build/
+docs/
+data/
+
+# Environments
+.env
+.venv/

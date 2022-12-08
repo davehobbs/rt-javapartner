@@ -1,3 +1,4 @@
+import fnmatch
 import hashlib
 import logging
 import shutil
@@ -66,6 +67,28 @@ class FtpUtils:
             logging.exception(f"Failed to upload to {tgt_file}", e)
             msg = "Upload failed"
         return msg
+
+    def ftp_delete(self, target_path: Path):
+        """Delete some files on the target server"""
+        target_pattern = target_path.name  # Expected to be a glob pattern
+        target_dir = str(target_path.parent)
+        try:
+            with paramiko.SSHClient() as ssh:
+                ssh.load_system_host_keys()
+                ssh.connect(
+                    self.server, username=self.user_name, password=self.password
+                )
+                with ssh.open_sftp() as sftp:
+                    try:
+                        sftp.chdir(target_dir)
+                        files = sftp.listdir()
+                        for filename in files:
+                            if fnmatch.fnmatch(filename, target_pattern):
+                                sftp.remove(filename)
+                    except IOError:
+                        pass  # Directory may not exist
+        except IOError as e:
+            logging.exception(f"Failed to delete from {target_pattern}", e)
 
     def ssh_download(self, src_url: str, tgt_file: Path):
         try:

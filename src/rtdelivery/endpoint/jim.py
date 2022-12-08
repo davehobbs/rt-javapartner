@@ -27,12 +27,12 @@ class JIM:
             self.jim_server, self.jim_user_name, self.jim_password
         )
 
-    def remove_staging(self, workspace_path: Path):
-        for p in workspace_path.glob("stage.*"):
+    def remove_staging(self, workspace_path: Path, pattern):
+        for p in workspace_path.glob(pattern):
             p.unlink()
 
     def create_staging_file(self, workspace_path: Path, action: str):
-        stage_marker = workspace_path / f"stage.{environment}.{action}."
+        stage_marker = workspace_path / f"stage.{environment}.{action}"
         stage_marker.touch()
         return stage_marker
 
@@ -40,7 +40,8 @@ class JIM:
         """Attempt to upload the release to jim"""
         try:
             # remove any old staging files
-            self.remove_staging(drp.workspace_path)
+            self.remove_staging(drp.workspace_path, "stage.*")
+            self.transfer_utils.ftp_delete(drp.workspace_path / "stage.*")
 
             # upload the release
             tgt_root = self.config["vendors"][drp.vendor]["binary_root_dir"]

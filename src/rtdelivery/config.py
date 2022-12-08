@@ -24,10 +24,21 @@ if environment not in environments:
     logging.critical(
         f"The ENVIRONMENT environment variable needs to be one of {environments}"
     )
-    raise EnvironmentError(f"]ENVIRONMENT unexpected value {environment}")
+    raise EnvironmentError(f"ENVIRONMENT unexpected value")
 
 # Use the workspace folder if set. Otherwise download to the data directory
 workspace_dir = os.environ.get("WORKSPACE_FOLDER", app_path.parent.parent / "data")
+
+# Set of valid actions. Put to create or update, delete to remove
+actions = ["put", "delete"]
+
+
+def validate_action(action: str):
+    """Check the action and throw an Environment error if it is invalid"""
+    if action not in actions:
+        logging.critical(f"Invalid action {action}. Needs to be one of {actions}")
+        raise EnvironmentError(f"Invalid action")
+
 
 """ Config related functions """
 

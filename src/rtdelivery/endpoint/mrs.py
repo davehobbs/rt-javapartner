@@ -26,7 +26,7 @@ class MRS:
             self.rdm_server, self.rdm_user_name, self.rdm_password
         )
 
-    def upload_release(self, drp: DeliveryReleasePlatform):
+    def upload_release(self, drp: DeliveryReleasePlatform, action: str):
         """Attempt to upload the release to rdm"""
         src_dir = drp.workspace_path
         logging.info("Uploading rdm release")

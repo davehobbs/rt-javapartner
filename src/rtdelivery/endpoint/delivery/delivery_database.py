@@ -69,6 +69,31 @@ class DeliveryDatabase:
         self.db.execute(sql)
         return self._fetch_first_column()
 
+    def insert_file(
+        self,
+        vendor,
+        version_group,
+        platform,
+        file_spec,
+        destination,
+        bldlang="java",
+        technology="jdk",
+    ) -> bool:
+        values = {
+            "vendor": vendor,
+            "bldlang": bldlang,
+            "technology": technology,
+            "version_group": version_group,
+            "platform": platform,
+            "file": file_spec,
+            "destination": destination,
+        }
+
+        sql = """INSERT INTO files (id, vendor, bldlang, technology, version_group, platform, file, destination, chksum_srcfile, fmt_seqno, jim_seqno) 
+                 VALUES (:id, :vendor, :bldlang, :technology, :version_group, :platform, :file, :destination, '', '', '')
+            """
+        self.db.execute(sql, values)
+
 
 class DatabaseDestination:
     """Find information in the database based on the destination"""
@@ -86,6 +111,12 @@ class DatabaseDestination:
         self.vendor = vendor
         self.platform = platform
         self.vr = vr
+
+    def insert_file(self, file_spec):
+        """Insert a file spec into the database for this destination"""
+        self.db.insert_file(
+            self.vendor, self.vr, self.platform, file_spec, self.destination
+        )
 
     def platforms_for_destination(self):
         """List all the platforms"""

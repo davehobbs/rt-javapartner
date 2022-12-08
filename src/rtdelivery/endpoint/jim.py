@@ -31,12 +31,12 @@ class JIM:
         for p in workspace_path.glob("stage.*"):
             p.unlink()
 
-    def create_staging_file(self, workspace_path: Path):
-        stage_marker = workspace_path / f"stage.{environment}"
+    def create_staging_file(self, workspace_path: Path, action: str):
+        stage_marker = workspace_path / f"stage.{environment}.{action}."
         stage_marker.touch()
         return stage_marker
 
-    def upload_release(self, drp: DeliveryReleasePlatform):
+    def upload_release(self, drp: DeliveryReleasePlatform, action: str):
         """Attempt to upload the release to jim"""
         try:
             # remove any old staging files
@@ -50,14 +50,15 @@ class JIM:
             threaded_upload(self, drp.files(), tgt_dir)
 
             # indicate the upload has completed
-            stage_marker = self.create_staging_file(drp.workspace_path)
+            stage_marker = self.create_staging_file(drp.workspace_path, action)
             threaded_upload(self, [stage_marker], tgt_dir)
         except KeyError as e:
             logging.warning(f"Release {drp} setting not found in jim_config.yaml")
 
-    def upload(self, src_file: Path, tgt_file: Path) -> None:
+    def upload(self, src_file: Path, tgt_file: Path, overwrite: bool = False) -> None:
         """See threading.py threaded_upload"""
-        if not dry_run:
-            self.transfer_utils.ftp_upload(src_file, tgt_file)
-        prefix = "Would upload" if dry_run else "Uploaded"
+        if dry_run:
+            prefix = "Would upload"
+        else:
+            prefix = self.transfer_utils.ftp_upload(src_file, tgt_file, overwrite)
         logging.info(f"\t{prefix} {tgt_file.name}")

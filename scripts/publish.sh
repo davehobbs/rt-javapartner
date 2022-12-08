@@ -13,8 +13,8 @@ mkdir -p "logs"
 
 SRC_DIR="src"
 
-# Download the inventory from the different source systems
-python3 $SRC_DIR/deliver.py
+# Download releases from sources and publish to destinations
+python3 $SRC_DIR/deliver.py --action put
 
 git add --all
 git commit -m "Latest javapartner site delivery"

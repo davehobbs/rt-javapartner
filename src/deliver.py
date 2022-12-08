@@ -32,7 +32,7 @@ endpoints = {
 }
 
 
-def deliver(delivery_config):
+def deliver(delivery_config, action: str):
     # Load the release info from the yaml config
     deliveries = deliveries_for_destination(delivery_config, "config")
     for destination, drps in deliveries.items():
@@ -66,7 +66,7 @@ def deliver(delivery_config):
                     else:
                         jpr.download(filtered_files, False)
                         target = endpoint.klass()
-                        target.upload_release(drp)
+                        target.upload_release(drp, action)
                     logging.info("")
             except Exception as e:
                 logging.critical(e, exc_info=True)
@@ -79,6 +79,11 @@ def main():
         description="Deliver a java partner release to the sftp site"
     )
 
+    parser.add_argument(
+        "--action",
+        default="put",
+        help="What action to take. Either 'put' or 'delete'",
+    )
     parser.add_argument(
         "--delivery_config",
         default="oracle_releases.yml",
@@ -103,11 +108,12 @@ def main():
     config.dry_run = args.testing
     config.workspace_dir = args.workspace_dir
     logging.info(f"Using configuration file {args.delivery_config}")
+    logging.info(f"Action has been set to {args.action}")
     logging.info(f"Dry run has been set to {config.dry_run}")
     logging.info(f"Environment has been set to {config.environment}")
     logging.info(f"Workspace directory {args.workspace_dir}")
 
-    deliver(args.delivery_config)
+    deliver(args.delivery_config, args.action)
     logging.info("Finished delivery")
     return 0
 

@@ -39,13 +39,14 @@ class JIM:
     def upload_release(self, drp: DeliveryReleasePlatform, action: str):
         """Attempt to upload the release to jim"""
         try:
-            # remove any old staging files
-            self.remove_staging(drp.workspace_path, "stage.*")
-            self.transfer_utils.ftp_delete(drp.workspace_path / "stage.*")
-
-            # upload the release
             tgt_root = self.config["vendors"][drp.vendor]["binary_root_dir"]
             tgt_dir = Path(f"{tgt_root}/{drp.vr}/{drp.vrmf}/{drp.platform}")
+
+            # remove any old staging files
+            self.remove_staging(drp.workspace_path, "stage.*")
+            self.transfer_utils.ftp_delete(tgt_dir / "stage.*")
+
+            # upload the release
             logging.info(f"\tUploading to jim")
             logging.info(f"\tTarget path: {tgt_dir}")
             threaded_upload(self, drp.files(), tgt_dir)
